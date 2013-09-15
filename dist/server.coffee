@@ -2,9 +2,12 @@ express = require 'express'
 engines = require 'consolidate'
 routes  = require './routes'
 
+console.log "inside server!!!!"
 redis = require './lib/redis'
-registry = require './registry.json'
-redis.set "registry", JSON.stringify registry, null, 2
+redis.get "registry", (err, data) ->
+  unless data
+    registry = require './registry.json'
+    redis.set "registry", JSON.stringify registry, null, 2
 
 exports.startServer = (config, callback) ->
 
