@@ -2,6 +2,7 @@ express = require 'express'
 engines = require 'consolidate'
 routes  = require './routes'
 
+console.log "inside server!!!!"
 redis = require './lib/redis'
 redis.get "registry", (err, data) ->
   unless data
