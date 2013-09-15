@@ -2,6 +2,10 @@ express = require 'express'
 engines = require 'consolidate'
 routes  = require './routes'
 
+redis = require './lib/redis'
+registry = require './registry.json'
+redis.set "registry", JSON.stringify registry, null, 2
+
 exports.startServer = (config, callback) ->
 
   port = process.env.PORT or config.server.port
