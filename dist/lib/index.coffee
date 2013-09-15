@@ -2,17 +2,15 @@ fs = require 'fs'
 path = require 'path'
 
 _ = require 'lodash'
-
 npm = require 'npm'
 
-outpath = path.join __dirname, "..", "registry.json"
+redis = require './redis'
 
 writeOutput = (mods) ->
   mods = _.sortBy mods, (mod) -> mod.name
-
   console.log "Writing #{mods.length} modules to registry."
-  output = JSON.stringify mods, null, 2
-  fs.writeFileSync outpath, output
+  redis.set "registry", JSON.stringify(mods, null, 2)
+  redis.end()
 
 npmOpts =
   outfd: null
